@@ -1,6 +1,6 @@
 Package.describe({
   summary: "CAS support for accounts",
-  version: "0.0.1",
+  version: "0.0.2",
   name: "karlbanke:accounts-cas",
   git: "https://github.com/karlbanke/meteor-accounts-cas"
 });
