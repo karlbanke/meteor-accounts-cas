@@ -5,7 +5,7 @@ CAS login support.
 
 ## Usage
 
-put CAS settings in Meteor.settings (for exemple using METEOR_SETTINGS env or --settings) like so:
+put CAS settings in Meteor.settings (for example using METEOR_SETTINGS env or --settings) like so:
 
 ```
 "cas": {
@@ -14,7 +14,6 @@ put CAS settings in Meteor.settings (for exemple using METEOR_SETTINGS env or --
 },
 "public": {
 	"cas": {
-	    "clientprefix": "myprefix",
 		"loginUrl": "https://mycasserver/cas/login",
 		"serviceParam": "service",
 		"popupWidth": 810,
@@ -30,7 +29,7 @@ Meteor.loginWithCas([callback]);
 ```
 
 It must open a popup containing you CAS login from. The popup will be closed immediately if you are
-already logged with your CAS server. The clientprefix path may not contain any slashes. This implementation
+already logged with your CAS server. This implementation
 uses the request library and thus can also be used seamlessly for development. Implementation is based on
 atoy40:accounts-cas (https://github.com/atoy40/meteor-accounts-cas)
 

@@ -5,8 +5,7 @@ Meteor.loginWithCas = function(callback) {
 
     if (!Meteor.settings.public &&
         !Meteor.settings.public.cas &&
-        !Meteor.settings.public.cas.loginUrl &&
-        !Meteor.settings.public.cas.clientprefix) {
+        !Meteor.settings.public.cas.loginUrl) {
         return;
     }
 
@@ -14,7 +13,7 @@ Meteor.loginWithCas = function(callback) {
 
     var loginUrl = settings.loginUrl +
         "?" + (settings.service || "service") + "=" +
-        Meteor.absoluteUrl('/'+Meteor.settings.public.cas.clientprefix+'/_cas/') +
+        Meteor.absoluteUrl('_cas/') +
         credentialToken;
 
     var popup = openCenteredPopup(

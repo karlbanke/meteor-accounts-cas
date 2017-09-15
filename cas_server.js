@@ -5,7 +5,7 @@ var request = Npm.require('request');
 
 var _casCredentialTokens = {};
 
-RoutePolicy.declare('/'+Meteor.settings.public.cas.clientprefix+'/_cas/', 'network');
+RoutePolicy.declare('/_cas/', 'network');
 
 /**
  * Initialize CAS with the given `options`.
@@ -134,7 +134,7 @@ middleware = function (req, res, next) {
 
     // Any non-cas request will continue down the default
     // middlewares.
-    if (splitPath[1] !== Meteor.settings.public.cas.clientprefix && splitPath[2] !== '_cas') {
+    if (splitPath[1] !== '_cas') {
       console.log("Bare Path: " + barePath);
       console.log("Split Path: " + splitPath[1]);
       console.log("Continue path does not match");
@@ -143,7 +143,7 @@ middleware = function (req, res, next) {
     }
 
     // get auth token
-    var credentialToken = splitPath[3];
+    var credentialToken = splitPath[2];
     if (!credentialToken) {
       closePopup(res);
       return;
@@ -173,7 +173,7 @@ var casTicket = function (req, token, callback) {
 
   var cas = new CAS({
     base_url: Meteor.settings.cas.baseUrl,
-    service: Meteor.absoluteUrl() + "/" + Meteor.settings.public.cas.clientprefix + "/_cas/" + token
+    service: Meteor.absoluteUrl() + "_cas/" + token
   });
 
   console.log('About to call cas validate');
