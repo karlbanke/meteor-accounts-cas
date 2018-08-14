@@ -79,41 +79,6 @@ CAS.prototype.validate = function(ticket, callback) {
     return;
   });
 
-
-
-  // var req = https.get({
-  //   host: this.hostname,
-  //   port: this.port,
-  //
-  // }, function(res) {
-  //   // Handle server errors
-  //   res.on('error', function(e) {
-  //     callback(e);
-  //   });
-  //
-  //   // Read result
-  //   res.setEncoding('utf8');
-  //   var response = '';
-  //   res.on('data', function(chunk) {
-  //     response += chunk;
-  //   });
-  //
-  //   res.on('end', function() {
-  //     var sections = response.split('\n');
-  //     if (sections.length >= 1) {
-  //       if (sections[0] == 'no') {
-  //         callback(undefined, false);
-  //         return;
-  //       } else if (sections[0] == 'yes' &&  sections.length >= 2) {
-  //         callback(undefined, true, sections[1]);
-  //         return;
-  //       }
-  //     }
-  //
-  //     // Format was not correct, error
-  //     callback({message: 'Bad response format.'});
-  //   });
-  // });
 };
 
 // Listen to incoming OAuth http requests
@@ -145,18 +110,18 @@ middleware = function (req, res, next) {
     // get auth token
     var credentialToken = splitPath[2];
     if (!credentialToken) {
-      closePopup(res);
+      redirectToApp(res, 'unauthorized');
       return;
     }
 
     // validate ticket
     casTicket(req, credentialToken, function() {
-      closePopup(res);
+        redirectToApp(res, credentialToken);
     });
 
   } catch (err) {
     console.log("account-cas: unexpected error : " + err.message);
-    closePopup(res);
+      redirectToApp(res, 'unauthorized');
   }
 };
 
@@ -230,8 +195,12 @@ var _retrieveCredential = function(credentialToken) {
   return result;
 }
 
-var closePopup = function(res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  var content = '<html><body><div id="popupCanBeClosed"></div></body></html>';
-  res.end(content, 'utf-8');
+var redirectToApp = function(res, credentialToken) {
+  if (credentialToken) {
+      res.writeHead(301, {'Location': Meteor.absoluteUrl('cas/' + credentialToken)});
+  } else {
+      res.writeHead(301, {'Location': Meteor.absoluteUrl('')});
+  }
+  // var content = '<html><body><div id="popupCanBeClosed"></div></body></html>';
+  res.end();
 }
