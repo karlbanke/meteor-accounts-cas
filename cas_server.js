@@ -58,7 +58,7 @@ CAS.prototype.validate = function(ticket, callback) {
     pathname: "https://" + this.hostname + ":" + this.port + "/" +  this.base_path +'/validate',
     query: {ticket: ticket, service: this.service}
   })
-  console.log('Validation path: ' + path);
+
 
   request(path, function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred
@@ -100,9 +100,6 @@ middleware = function (req, res, next) {
     // Any non-cas request will continue down the default
     // middlewares.
     if (splitPath[1] !== '_cas') {
-      console.log("Bare Path: " + barePath);
-      console.log("Split Path: " + splitPath[1]);
-      console.log("Continue path does not match");
       next();
       return;
     }
