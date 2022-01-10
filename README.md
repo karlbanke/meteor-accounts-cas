@@ -48,3 +48,8 @@ For local testing export METEOR_PACKAGE_DIRS to point to this
 directory and add an updated version of the project (version number in
 package.js) to your project.
 
+## Release notes
+
+0.4.0 Requires Meteor 0.9.0 or better
+0.1.0 Requires Meteor 2.4.0 or better
+
